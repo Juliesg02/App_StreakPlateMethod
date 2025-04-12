@@ -1,5 +1,5 @@
 //
-//  StepsView.swift
+//  GoalView.swift
 //  StreakPlateMethod
 //
 //  Created by Julio Enrique Sanchez Guajardo on 12/04/25.
@@ -49,7 +49,7 @@ struct GoalView: View {
                     
                     Spacer()
                     
-                    NavigationLink (destination: {}) {
+                    NavigationLink (destination: StepsView()) {
                         Text("Continue")
                             .font(.title)
                             .padding()
