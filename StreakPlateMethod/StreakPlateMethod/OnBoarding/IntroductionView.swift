@@ -47,7 +47,7 @@ struct IntroductionView: View {
                         
                         Spacer()
                         
-                        NavigationLink (destination: WelcomeView()) {
+                        NavigationLink (destination: GoalView()) {
                             Text("Continue")
                                 .styledTextButton()
                         }
