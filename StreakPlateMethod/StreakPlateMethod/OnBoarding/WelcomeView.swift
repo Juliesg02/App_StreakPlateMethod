@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct WelcomeView: View {
+    @Binding var path: [Screen]
     var body: some View {
-        NavigationStack {
             GeometryReader { geometry in
                 VStack {
                     Spacer()
@@ -29,21 +29,20 @@ struct WelcomeView: View {
                     
                     Spacer()
                     
-                    NavigationLink (destination: IntroductionView()) {
+                    Button {
+                        path.append(.introductionView)
+                    } label: {
                         Text("Let's begin!")
                             .styledTextButton()
                     }
-                    
                     Spacer()
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)
-                
             }
         }
-                }
     }
 
 
 #Preview {
-    WelcomeView()
+    WelcomeView(path: .constant([]))
 }

@@ -69,10 +69,13 @@ struct InstructionsView: View {
 
 
 struct StepsView: View {
-    init() {
+    init(path: Binding<[Screen]>) {
+        _path = path
+        
         UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Color.accentColor)
         UIPageControl.appearance().pageIndicatorTintColor = UIColor(Color.secondary)
     }
+    @Binding var path: [Screen]
     var body: some View {
         GeometryReader { geometry in
             TabView {
@@ -95,14 +98,11 @@ struct StepsView: View {
                         .foregroundStyle(.secondary)
                         .padding(.vertical)
                     
-                    NavigationLink (destination: {}) {
+                    Button {
+                        path = []
+                    } label: {
                         Text("Let's go!")
-                            .font(.title)
-                            .padding()
-                            .padding(.horizontal, 30)
-                            .background(Color.accentColor)
-                            .foregroundColor(.white)
-                            .cornerRadius(12)
+                            .styledTextButton()
                     }
                     .padding(.top)
                 }
@@ -118,5 +118,5 @@ struct StepsView: View {
 
 
 #Preview {
-    StepsView()
+    StepsView(path: .constant([]))
 }

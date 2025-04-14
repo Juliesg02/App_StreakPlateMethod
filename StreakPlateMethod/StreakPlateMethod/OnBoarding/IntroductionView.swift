@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct IntroductionView: View {
+    @Binding var path: [Screen]
     var body: some View {
             GeometryReader { geometry in
                 HStack {
@@ -47,7 +48,9 @@ struct IntroductionView: View {
                         
                         Spacer()
                         
-                        NavigationLink (destination: GoalView()) {
+                        Button {
+                            path.append(.goalView)
+                        } label: {
                             Text("Continue")
                                 .styledTextButton()
                         }
@@ -60,5 +63,5 @@ struct IntroductionView: View {
 }
 
 #Preview {
-    IntroductionView()
+    IntroductionView(path: .constant([]))
 }
