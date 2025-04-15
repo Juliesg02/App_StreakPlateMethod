@@ -94,17 +94,13 @@ struct SelectionView: View {
                     }
                     .padding()
                     
-                    NavigationLink(destination: {}) {
+                    Button {
+                        //path.append()
+                    } label: {
                         Text("Let's streak!")
-                            .font(.title)
-                            .padding()
-                            .padding(.horizontal, 30)
-                            .background(microSelected != "None" && cultureSelected != "None" ? Color.accentColor : Color.gray.opacity(0.5))
-                            .foregroundColor(.white)
-                            .cornerRadius(12)
+                            .styledTextButton()
                     }
                     .disabled(microSelected == "None" || cultureSelected == "None")
-                    
                     Spacer()
                 }
                 .padding()
