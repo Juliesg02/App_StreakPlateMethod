@@ -1,0 +1,22 @@
+//
+//  SelectionModel.swift
+//  StreakPlateMethod
+//
+//  Created by Julio Enrique Sanchez Guajardo on 15/04/25.
+//
+
+import SwiftUI
+
+struct Microorganism {
+    let name: String
+    let type: String
+    let color : UIColor
+    let image : String
+}
+
+struct CultureMedia {
+    let name: String
+    let type: String
+    let color : UIColor
+    let image : String
+}
