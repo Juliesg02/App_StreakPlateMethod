@@ -20,7 +20,7 @@ struct ContentView: View {
         NavigationStack(path: $path) {
             VStack {
                 NavigationLink(destination: {}) {
-                    Text("Intructions")
+                    Text("Start")
                         .styledTextButton()
                 }
                 Button {
