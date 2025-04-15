@@ -32,7 +32,6 @@ struct SelectionView: View {
                         Text("Select your Microorganism:")
                             .font(.largeTitle)
                             .fontWeight(.bold)
-                        //Spacer()
                     }
                     LazyVGrid (columns: layout) {
                         ForEach(microorganisms, id: \.name) { microorganism in
@@ -41,14 +40,7 @@ struct SelectionView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: geometry.size.width * 0.07)
-                                    .padding()
                                     .clipShape(.circle)
-                                /*
-                                 .overlay(
-                                 Circle()
-                                 .stroke(microSelected == microorganism.name ? Color.accentColor : .white, lineWidth: 4)
-                                 )
-                                 */
                                 Text(microorganism.name)
                                     .font(.title3)
                                     .bold()
@@ -73,7 +65,6 @@ struct SelectionView: View {
                         Text("Select your Culture Media:")
                             .font(.largeTitle)
                             .fontWeight(.bold)
-                        //Spacer()
                     }
                     LazyVGrid(columns: layout) {
                         ForEach(cultureMedias, id: \.name) { media in
@@ -82,14 +73,7 @@ struct SelectionView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: geometry.size.width * 0.07)
-                                    .padding()
                                     .clipShape(.circle)
-                                /*
-                                 .overlay(
-                                 Circle()
-                                 .stroke(cultureSelected == media.name ? Color.accentColor : .white, lineWidth: 4)
-                                 )
-                                 */
                                 Text(media.name)
                                     .font(.title3)
                                     .bold()
