@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SelectionView: View {
+    @Binding var path: [Screen]
     
     let layout = [
         GridItem(.fixed(200)),
@@ -24,7 +25,6 @@ struct SelectionView: View {
     
     var body: some View {
         
-        NavigationStack {
             GeometryReader { geometry in
                 VStack {
                     Spacer()
@@ -125,7 +125,7 @@ struct SelectionView: View {
                 }
                 .padding()
             }
-        }
+        
     }
     
     func updateMicroorganism() {
@@ -147,5 +147,5 @@ struct SelectionView: View {
 }
 
 #Preview {
-    SelectionView()
+    SelectionView(path: .constant([]))
 }

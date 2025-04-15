@@ -12,6 +12,7 @@ enum Screen: Hashable {
     case introductionView
     case goalView
     case stepsView
+    case selectionView
 }
 
 struct ContentView: View {
@@ -19,10 +20,13 @@ struct ContentView: View {
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
-                NavigationLink(destination: {}) {
+                Button {
+                    path.append(.selectionView)
+                } label: {
                     Text("Start")
                         .styledTextButton()
                 }
+                
                 Button {
                     path.append(.welcomeView)
                 } label: {
@@ -35,6 +39,7 @@ struct ContentView: View {
                 case .introductionView: IntroductionView(path: $path)
                 case .goalView: GoalView(path: $path)
                 case .stepsView: StepsView(path: $path)
+                case .selectionView: SelectionView(path: $path)
                 }
             }
         }
