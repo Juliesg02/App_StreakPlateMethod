@@ -95,7 +95,7 @@ struct SelectionView: View {
                     .padding()
                     
                     Button {
-                        //path.append()
+                        path.append(.labView)
                     } label: {
                         Text("Let's streak!")
                             .styledTextButton()

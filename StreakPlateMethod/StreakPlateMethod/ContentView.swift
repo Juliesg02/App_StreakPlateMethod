@@ -13,6 +13,7 @@ enum Screen: Hashable {
     case goalView
     case stepsView
     case selectionView
+    case labView
 }
 
 struct ContentView: View {
@@ -40,6 +41,7 @@ struct ContentView: View {
                 case .goalView: GoalView(path: $path)
                 case .stepsView: StepsView(path: $path)
                 case .selectionView: SelectionView(path: $path)
+                case .labView: LabView(path: $path)
                 }
             }
         }
