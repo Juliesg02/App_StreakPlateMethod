@@ -16,8 +16,8 @@ struct SelectionView: View {
         GridItem(.fixed(200)),
         GridItem(.fixed(200)),
     ]
-    @State private var microSelected = "None"
-    @State private var cultureSelected = "None"
+    @State private var microSelected: Int? = nil
+    @State private var cultureSelected: Int? = nil
     @State private var microorganism: Microorganism = microorganisms[0]
     @State private var cultureMedia: CultureMedia = cultureMedias[0]
     
@@ -34,7 +34,8 @@ struct SelectionView: View {
                             .fontWeight(.bold)
                     }
                     LazyVGrid (columns: layout) {
-                        ForEach(microorganisms, id: \.name) { microorganism in
+                        ForEach(microorganisms.indices, id: \.self) { index in
+                            let microorganism = microorganisms[index]
                             VStack {
                                 Image(microorganism.image)
                                     .resizable()
@@ -44,17 +45,17 @@ struct SelectionView: View {
                                 Text(microorganism.name)
                                     .font(.title3)
                                     .bold()
-                                    .foregroundColor(microSelected == microorganism.name ? Color(microorganism.color) :.secondary)
+                                    .foregroundColor(microSelected == index ? Color(microorganism.color) :.secondary)
                                     .multilineTextAlignment(.center)
                                     .padding(.top)
                                 
                                 Text(microorganism.type)
                                     .font(.caption)
-                                    .foregroundColor(microSelected == microorganism.name ? Color(microorganism.color) :.secondary)
+                                    .foregroundColor(microSelected == index ? Color(microorganism.color) :.secondary)
                                     .italic()
                             }
                             .onTapGesture {
-                                microSelected = microorganism.name
+                                microSelected = index
                                 updateMicroorganism()
                             }
                         }
@@ -67,7 +68,8 @@ struct SelectionView: View {
                             .fontWeight(.bold)
                     }
                     LazyVGrid(columns: layout) {
-                        ForEach(cultureMedias, id: \.name) { media in
+                        ForEach(cultureMedias.indices, id: \.self) { index in
+                            let media = cultureMedias[index]
                             VStack {
                                 Image(media.image)
                                     .resizable()
@@ -77,17 +79,17 @@ struct SelectionView: View {
                                 Text(media.name)
                                     .font(.title3)
                                     .bold()
-                                    .foregroundColor(cultureSelected == media.name ? Color(media.color) :.secondary)
+                                    .foregroundColor(cultureSelected == index ? Color(media.color) :.secondary)
                                     .multilineTextAlignment(.center)
                                     .padding(.top)
                                 
                                 Text(media.type)
                                     .font(.caption)
-                                    .foregroundColor(cultureSelected == media.name ? Color(media.color) :.secondary)
+                                    .foregroundColor(cultureSelected == index ? Color(media.color) :.secondary)
                                     .italic()
                             }
                             .onTapGesture {
-                                cultureSelected = media.name
+                                cultureSelected = index
                                 updateCulture()
                             }
                         }
@@ -95,12 +97,12 @@ struct SelectionView: View {
                     .padding()
                     
                     Button {
-                        path.append(.labView)
+                        path.append(.labView(microorganism: microorganism, cultureMedia: cultureMedia))
                     } label: {
                         Text("Let's streak!")
                             .styledTextButton()
                     }
-                    .disabled(microSelected == "None" || cultureSelected == "None")
+                    .disabled(microSelected == nil || cultureSelected == nil)
                     Spacer()
                 }
                 .padding()
@@ -109,21 +111,20 @@ struct SelectionView: View {
     }
     
     func updateMicroorganism() {
-        microorganism = microorganisms.first{
-            $0.name == microSelected
-        } ??  Microorganism(name: """
-                  Salmonella 
-                  enterica
-                  """,
-                            type: "Bacteria", color: .salmonellaColor, image: "salmonella")
-    }
+            if let index = microSelected {
+                microorganism = microorganisms[index]
+            } else {
+                microorganism = microorganisms[0]
+            }
+        }
     
     func updateCulture() {
-        cultureMedia = cultureMedias.first{
-            $0.name == cultureSelected
-        } ??  CultureMedia(name: "Nutrient Agar",
-                           type: "General", color: .cultureNutrient, image: "nutrientAgar")
-    }
+            if let index = cultureSelected {
+                cultureMedia = cultureMedias[index]
+            } else {
+                cultureMedia = cultureMedias[0]
+            }
+        }
 }
 
 #Preview {

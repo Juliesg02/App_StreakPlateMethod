@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct Microorganism {
+struct Microorganism: Equatable, Hashable {
     let name: String
     let type: String
     let color : UIColor
     let image : String
 }
 
-struct CultureMedia {
+struct CultureMedia: Equatable, Hashable {
     let name: String
     let type: String
     let color : UIColor
