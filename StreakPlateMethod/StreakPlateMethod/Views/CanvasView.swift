@@ -55,8 +55,10 @@ struct CanvasView: UIViewRepresentable {
         
         func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
             let currentDrawing = canvasView.drawing
-            parent.drawing = currentDrawing
             
+            DispatchQueue.main.async {
+                self.parent.drawing = currentDrawing
+            }
             
             // Detect new strokes
             if currentDrawing.strokes.count > parent.pathsInfo.count {
@@ -68,7 +70,9 @@ struct CanvasView: UIViewRepresentable {
 //                        microorganism: parent.microorganism,
 //                        isFlamed: parent.isFlamed
                     )
-                    parent.pathsInfo.append(newPathInfo)
+                    DispatchQueue.main.async {
+                        self.parent.pathsInfo.append(newPathInfo)
+                    }
                     print("New stroke added. Total strokesInfo count: \(parent.pathsInfo.count)")
                     
 //                    if parent.isFlamed {
