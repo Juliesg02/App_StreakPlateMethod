@@ -20,7 +20,11 @@ struct LabView: View {
     @State private var backgroundColor: UIColor = .white
 
     //Stroke info
-        @State private var pathsInfo: [PathInfo] = []
+    @State private var pathsInfo: [PathInfo] = []
+    
+    //Buttons
+    @State private var rotation = 0.0
+    @State private var rotationIcon = 0.0
     
     var body: some View {
         GeometryReader { geometry in
