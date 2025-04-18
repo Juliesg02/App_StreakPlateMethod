@@ -25,13 +25,60 @@ struct LabView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                Text("This is the lab")
-                CanvasView(canvasView: $canvasView, drawing: $drawing, pathsInfo: $pathsInfo, backgroundColor: $backgroundColor)
-                    .frame(width: geometry.size.height * 0.6, height: geometry.size.height * 0.6)
-                    .clipShape(Circle())
-                    .shadow(radius: 5)
-                    .padding()
-                    //.rotationEffect(.degrees(rotation))
+                Spacer()
+                Button(action: {}) {
+                    Text("Rotate")
+                        .styledTextButton()
+                }
+                HStack {
+                    Spacer()
+                    Button(action: {}) {
+                        Text("Incubate")
+                            .styledTextButton()
+                    }
+                    CanvasView(canvasView: $canvasView, drawing: $drawing, pathsInfo: $pathsInfo, backgroundColor: $backgroundColor)
+                        .frame(width: geometry.size.height * 0.6, height: geometry.size.height * 0.6)
+                        .clipShape(Circle())
+                        .shadow(radius: 5)
+                        .padding()
+                        //.rotationEffect(.degrees(rotation))
+                    Button(action: {}) {
+                        Text("Incubate")
+                            .styledTextButton()
+                    }
+                    Spacer()
+                }
+                Button(action: {}) {
+                    Text("Incubate")
+                        .styledTextButton()
+                }
+                Spacer()
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        //
+                    } label: {
+                        Text("Cheat Sheet")
+                            .foregroundStyle(Color.accentColor)
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        //
+                    } label: {
+                        Text("Restart")
+                            .foregroundStyle(.red)
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        //
+                    } label: {
+                        Text("About")
+                            .foregroundStyle(Color.accentColor)
+                    }
+                }
             }
         }
         .onAppear {
