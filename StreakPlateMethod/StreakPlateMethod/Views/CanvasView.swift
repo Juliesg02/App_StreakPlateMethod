@@ -15,10 +15,13 @@ struct CanvasView: UIViewRepresentable {
     @Binding var canvasView: PKCanvasView // Binding to allow state updates from the parent view
     @Binding var drawing: PKDrawing // Binding the drawing
     
+    //Stroke info
     @Binding var pathsInfo: [PathInfo] // Binding the strokesInfo
     //@Binding var isSampled: Bool
     //@Binding var microorganism: String
     //@Binding var isFlamed: Bool
+    
+    //Canvas
     @Binding var backgroundColor: UIColor
     
     //@Binding var countingTime: Int
