@@ -16,11 +16,12 @@ struct LabView: View {
     //Canvas
     @State private var canvasView = PKCanvasView()
     @State private var drawing = PKDrawing()
-//    @State private var toolPicker = PKToolPicker()
+    //    @State private var toolPicker = PKToolPicker()
     @State private var backgroundColor: UIColor = .white
-
+    
     //Stroke info
     @State private var pathsInfo: [PathInfo] = []
+    @State private var isSampled: Bool = false
     
     //Buttons
     @State private var rotation = 0.0
@@ -42,9 +43,23 @@ struct LabView: View {
                 }
                 HStack {
                     Spacer()
-                    Button(action: {}) {
-                        Text("Incubate")
-                            .styledTextButton()
+                    Button(action: takeSample) {
+                        VStack {
+                            Text(isSampled ? "Sampled" : "    ")
+                                .font(.title)
+                                .bold()
+                                .foregroundStyle(Color(microorganism.color))
+                            
+                            Image(microorganism.image)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: geometry.size.width * 0.15)
+                            
+                            Text("Tab to sample")
+                            .font(.title3)
+                            .foregroundStyle(.gray)
+                        }
+                        .animation(.default, value: isSampled)
                     }
                     CanvasView(canvasView: $canvasView, drawing: $drawing, pathsInfo: $pathsInfo, backgroundColor: $backgroundColor)
                         .frame(width: geometry.size.height * 0.6, height: geometry.size.height * 0.6)
@@ -53,7 +68,7 @@ struct LabView: View {
                         .padding()
                         .rotationEffect(.degrees(rotation))
                     Button(action: {}) {
-                        Text("Incubate")
+                        Text("Flame")
                             .styledTextButton()
                     }
                     Spacer()
@@ -99,6 +114,10 @@ struct LabView: View {
         
         
     }
+    func takeSample() {
+        isSampled = true
+        //recetFlame()
+    }
 }
 
 #Preview {
@@ -106,6 +125,6 @@ struct LabView: View {
             microorganism: Microorganism(name: """
 Saccharomyces 
 cerevisiae
-""", type: "", color: .cyan, image: ""),
+""", type: "", color: .cyan, image: "yeast"),
             cultureMedia: CultureMedia(name: "", type: "", color: .cyan, image: ""))
 }
