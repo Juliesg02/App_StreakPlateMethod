@@ -26,9 +26,15 @@ struct LabView: View {
         GeometryReader { geometry in
             VStack {
                 Spacer()
-                Button(action: {}) {
-                    Text("Rotate")
-                        .styledTextButton()
+                Button(action: {withAnimation {
+                    rotation -= 90
+                    rotationIcon -= 360
+                }}) {
+                    Image("noventa")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: geometry.size.width * 0.05)
+                        .rotationEffect(.degrees(rotationIcon))
                 }
                 HStack {
                     Spacer()
@@ -41,7 +47,7 @@ struct LabView: View {
                         .clipShape(Circle())
                         .shadow(radius: 5)
                         .padding()
-                        //.rotationEffect(.degrees(rotation))
+                        .rotationEffect(.degrees(rotation))
                     Button(action: {}) {
                         Text("Incubate")
                             .styledTextButton()
