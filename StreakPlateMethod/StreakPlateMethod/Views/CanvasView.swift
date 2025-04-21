@@ -17,9 +17,9 @@ struct CanvasView: UIViewRepresentable {
     
     //Stroke info
     @Binding var pathsInfo: [PathInfo] // Binding the strokesInfo
-    //@Binding var isSampled: Bool
+    @Binding var isSampled: Bool
     //@Binding var microorganism: String
-    //@Binding var isFlamed: Bool
+    @Binding var isFlamed: Bool
     
     //Canvas
     @Binding var backgroundColor: UIColor
@@ -68,21 +68,20 @@ struct CanvasView: UIViewRepresentable {
                 if let newPath = currentDrawing.strokes.last?.path {
                     let newPathInfo = PathInfo(
                         path: newPath,
-                        strokeIndex: currentDrawing.strokes.count - 1//,
-//                        isSampled: parent.isSampled,
+                        strokeIndex: currentDrawing.strokes.count - 1,
+                        isSampled: parent.isSampled,
 //                        microorganism: parent.microorganism,
-//                        isFlamed: parent.isFlamed
+                        isFlamed: parent.isFlamed
                     )
                     DispatchQueue.main.async {
                         self.parent.pathsInfo.append(newPathInfo)
+                        print("New stroke added. Total strokesInfo count: \(self.parent.pathsInfo.count)")
                     }
-                    print("New stroke added. Total strokesInfo count: \(parent.pathsInfo.count)")
-                    
-//                    if parent.isFlamed {
-//                        parent.isFlamed = false
+                    if parent.isFlamed {
+                        parent.isFlamed = false
 //                        parent.countingTime = 0
-//                        parent.animationIndex = 0                    }
-//                    
+//                        parent.animationIndex = 0
+                    }
                 }
             }
         }
@@ -98,9 +97,9 @@ struct CanvasView: UIViewRepresentable {
 struct PathInfo {
     let path: PKStrokePath
     let strokeIndex: Int
-    //let isSampled: Bool
+    let isSampled: Bool
     //let microorganism: String
-    //let isFlamed: Bool
+    let isFlamed: Bool
 }
 
 struct PathInfoCut {

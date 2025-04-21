@@ -22,6 +22,7 @@ struct LabView: View {
     //Stroke info
     @State private var pathsInfo: [PathInfo] = []
     @State private var isSampled: Bool = false
+    @State private var isFlamed: Bool = false
     
     //Buttons
     @State private var rotation = 0.0
@@ -57,23 +58,24 @@ struct LabView: View {
                             
                             Text("Tab to sample")
                             .font(.title3)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(Color.secondary)
                         }
                         .animation(.default, value: isSampled)
                     }
-                    CanvasView(canvasView: $canvasView, drawing: $drawing, pathsInfo: $pathsInfo, backgroundColor: $backgroundColor)
+                    CanvasView(canvasView: $canvasView, drawing: $drawing, pathsInfo: $pathsInfo, isSampled: $isSampled, isFlamed: $isFlamed, backgroundColor: $backgroundColor)
                         .frame(width: geometry.size.height * 0.6, height: geometry.size.height * 0.6)
                         .clipShape(Circle())
                         .shadow(radius: 5)
                         .padding()
                         .rotationEffect(.degrees(rotation))
-                    Button(action: {}) {
-                        Text("Flame")
-                            .styledTextButton()
-                    }
+                    
+                    ButtonFlame(isFlamed: $isFlamed, isSample: $isSampled, width: geometry.size.width * 0.15)
+                    
                     Spacer()
                 }
-                Button(action: {}) {
+                Button(action: {
+                    print(pathsInfo)
+                }) {
                     Text("Incubate")
                         .styledTextButton()
                 }
@@ -116,6 +118,7 @@ struct LabView: View {
     }
     func takeSample() {
         isSampled = true
+        isFlamed = false
         //recetFlame()
     }
 }
