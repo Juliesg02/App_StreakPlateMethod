@@ -70,7 +70,6 @@ struct LabView: View {
                         .rotationEffect(.degrees(rotation))
                     
                     ButtonFlame(isFlamed: $isFlamed, isSample: $isSampled, width: geometry.size.width * 0.15)
-                    
                     Spacer()
                 }
                 Button(action: {
@@ -79,6 +78,7 @@ struct LabView: View {
                     Text("Incubate")
                         .styledTextButton()
                 }
+                Button("Delete", action: clearCanvas)
                 Spacer()
             }
             .toolbar {
@@ -92,18 +92,10 @@ struct LabView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        //
+                        clearCanvas()
                     } label: {
                         Text("Restart")
                             .foregroundStyle(.red)
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        //
-                    } label: {
-                        Text("About")
-                            .foregroundStyle(Color.accentColor)
                     }
                 }
             }
@@ -120,6 +112,15 @@ struct LabView: View {
         isSampled = true
         isFlamed = false
         //recetFlame()
+    }
+    func clearCanvas() {
+        drawing = PKDrawing() //canvasView.drawing = PKDrawing()
+        pathsInfo.removeAll()
+        print ("Strokes removed. Stroke count: \(pathsInfo.count)")
+        
+        isSampled = false
+        isFlamed = false
+        //segments.removeAll()
     }
 }
 
