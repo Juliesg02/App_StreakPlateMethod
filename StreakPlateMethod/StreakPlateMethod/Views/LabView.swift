@@ -29,7 +29,10 @@ struct LabView: View {
     @State private var rotationIcon = 0.0
     
     //Alerts
-    @State private var showingRestart = false
+    @State private var showingRestartAlert = false
+    @Environment(\.dismiss) var dismiss
+    @State private var showingBackAlert = false
+
     
     var body: some View {
         GeometryReader { geometry in
@@ -81,10 +84,21 @@ struct LabView: View {
                     Text("Incubate")
                         .styledTextButton()
                 }
-                Button("Delete", action: {showingRestart = true})
+                Button("Delete", action: {showingRestartAlert = true})
                 Spacer()
             }
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        showingBackAlert = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .fontWeight(.semibold)
+                            Text("Back")
+                        }
+                    }
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         //
@@ -95,20 +109,29 @@ struct LabView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        showingRestart = true
+                        showingRestartAlert = true
                     } label: {
                         Text("Restart")
                             .foregroundStyle(.red)
                     }
                 }
             }
+            .navigationBarBackButtonHidden(true)
         }
         .onAppear {
             canvasView.tool = PKInkingTool(.pen, color: .customGray, width: 5)
             backgroundColor = cultureMedia.color
             //microorganismName = microorganism.name
         }
-        .alert("Restart the Experiment", isPresented: $showingRestart) {
+        .alert("Exit the Experiment?", isPresented: $showingBackAlert) {
+            Button("Cancel", role: .cancel) {}
+            Button("Exit", role: .destructive) {
+                dismiss()
+            }
+        } message: {
+            Text("If you go back now, all your progress will be lost.")
+        }
+        .alert("Restart the Experiment", isPresented: $showingRestartAlert) {
             Button("Cancel", role: .cancel) {}
             Button("Restart", role: .destructive) {clearCanvas()}
         } message: {
