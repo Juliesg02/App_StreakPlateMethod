@@ -28,6 +28,9 @@ struct LabView: View {
     @State private var rotation = 0.0
     @State private var rotationIcon = 0.0
     
+    //Alerts
+    @State private var showingRestart = false
+    
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -78,7 +81,7 @@ struct LabView: View {
                     Text("Incubate")
                         .styledTextButton()
                 }
-                Button("Delete", action: clearCanvas)
+                Button("Delete", action: {showingRestart = true})
                 Spacer()
             }
             .toolbar {
@@ -92,7 +95,7 @@ struct LabView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        clearCanvas()
+                        showingRestart = true
                     } label: {
                         Text("Restart")
                             .foregroundStyle(.red)
@@ -104,6 +107,12 @@ struct LabView: View {
             canvasView.tool = PKInkingTool(.pen, color: .customGray, width: 5)
             backgroundColor = cultureMedia.color
             //microorganismName = microorganism.name
+        }
+        .alert("Restart the Experiment", isPresented: $showingRestart) {
+            Button("Cancel", role: .cancel) {}
+            Button("Restart", role: .destructive) {clearCanvas()}
+        } message: {
+            Text("Do you need a new petri dish?")
         }
         
         
