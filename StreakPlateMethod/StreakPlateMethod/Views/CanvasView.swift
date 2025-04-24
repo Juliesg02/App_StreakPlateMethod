@@ -57,34 +57,43 @@ struct CanvasView: UIViewRepresentable {
         }
         
         func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-            let currentDrawing = canvasView.drawing
-            
-            DispatchQueue.main.async {
-                self.parent.drawing = currentDrawing
-            }
-            
-            // Detect new strokes
-            if currentDrawing.strokes.count > parent.pathsInfo.count {
-                if let newPath = currentDrawing.strokes.last?.path {
-                    let newPathInfo = PathInfo(
-                        path: newPath,
-                        strokeIndex: currentDrawing.strokes.count - 1,
-                        isSampled: parent.isSampled,
-//                        microorganism: parent.microorganism,
-                        isFlamed: parent.isFlamed
-                    )
-                    DispatchQueue.main.async {
-                        self.parent.pathsInfo.append(newPathInfo)
+                // Get the current drawing from the canvas
+                let currentDrawing = canvasView.drawing
+                
+                // Detect new strokes BEFORE pushing anything to the UI
+                var newPathInfoToAppend: PathInfo? = nil
+                var shouldResetFlame = false
+                
+                if currentDrawing.strokes.count > parent.pathsInfo.count {
+                    if let newPath = currentDrawing.strokes.last?.path {
+                        let newPathInfo = PathInfo(
+                            path: newPath,
+                            strokeIndex: currentDrawing.strokes.count - 1,
+                            isSampled: parent.isSampled,
+                            isFlamed: parent.isFlamed
+                        )
+                        newPathInfoToAppend = newPathInfo
+                        shouldResetFlame = parent.isFlamed
+                    }
+                }
+                
+                // Now update UI-bound state on the main thread
+                DispatchQueue.main.async {
+                    self.parent.drawing = currentDrawing
+                    
+                    if let newInfo = newPathInfoToAppend {
+                        self.parent.pathsInfo.append(newInfo)
                         print("New stroke added. Total strokesInfo count: \(self.parent.pathsInfo.count)")
                     }
-                    if parent.isFlamed {
-                        parent.isFlamed = false
-//                        parent.countingTime = 0
-//                        parent.animationIndex = 0
+                    
+                    if shouldResetFlame {
+                        self.parent.isFlamed = false
+                        // Optional resets:
+                        // self.parent.countingTime = 0
+                        // self.parent.animationIndex = 0
                     }
                 }
             }
-        }
     }
     
     
