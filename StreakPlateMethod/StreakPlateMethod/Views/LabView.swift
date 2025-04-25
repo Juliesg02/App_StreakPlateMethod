@@ -32,6 +32,9 @@ struct LabView: View {
     @State private var showingRestartAlert = false
     @Environment(\.dismiss) var dismiss
     @State private var showingBackAlert = false
+    @State private var showingIncubate = false
+    @State private var showingNoStreak = false
+
 
     
     var body: some View {
@@ -80,6 +83,11 @@ struct LabView: View {
                 }
                 Button(action: {
                     print(pathsInfo)
+                    if drawing.strokes.count > 0 {
+                        showingIncubate = true
+                    } else {
+                        showingNoStreak = true
+                    }
                 }) {
                     Text("Incubate")
                         .styledTextButton()
@@ -123,6 +131,7 @@ struct LabView: View {
             backgroundColor = cultureMedia.color
             //microorganismName = microorganism.name
         }
+        
         .alert("Exit the Experiment?", isPresented: $showingBackAlert) {
             Button("Cancel", role: .cancel) {}
             Button("Exit", role: .destructive) {
@@ -131,11 +140,27 @@ struct LabView: View {
         } message: {
             Text("If you go back now, all your progress will be lost.")
         }
+        
         .alert("Restart the Experiment", isPresented: $showingRestartAlert) {
             Button("Cancel", role: .cancel) {}
             Button("Restart", role: .destructive) {clearCanvas()}
         } message: {
             Text("Do you need a new petri dish?")
+        }
+        
+        .alert("The last step!", isPresented: $showingIncubate) {
+            Button("Cancel", role: .destructive) {}
+            Button("Incubate", role: .cancel) {
+                //incubate()
+            }
+        } message: {
+            Text("Do you want to incubate your petri dish?")
+        }
+        
+        .alert("Empty petri dish", isPresented: $showingNoStreak) {
+            Button("Ok") {}
+        } message: {
+            Text("Your petri dish needs to have at least one stroke.")
         }
         
         
