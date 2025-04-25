@@ -35,6 +35,8 @@ struct LabView: View {
     @State private var showingIncubate = false
     @State private var showingNoStreak = false
 
+    //Analisis
+    @State private var segments: [Segment] = []
 
     
     var body: some View {
@@ -151,7 +153,7 @@ struct LabView: View {
         .alert("The last step!", isPresented: $showingIncubate) {
             Button("Cancel", role: .destructive) {}
             Button("Incubate", role: .cancel) {
-                //incubate()
+                incubate()
             }
         } message: {
             Text("Do you want to incubate your petri dish?")
@@ -177,7 +179,31 @@ struct LabView: View {
         
         isSampled = false
         isFlamed = false
-        //segments.removeAll()
+        segments.removeAll()
+    }
+    func incubate() {
+        print("Incubation started")
+        
+        //Creation of Segments
+        for strokeIndex in drawing.strokes.indices {
+            var idNumber = 0
+            let path = drawing.strokes[strokeIndex].path
+            for parametricValue in 0..<(path.count-1)  {
+                let newSegment = Segment(strokeIndex: strokeIndex,
+                                         id: UUID(),
+                                         idNumber: idNumber,
+                                         points:
+                                            [path.interpolatedPoint(at: CGFloat(parametricValue)).location,
+                                             path.interpolatedPoint(at: CGFloat(parametricValue + 1)).location] )
+                idNumber += 1
+                segments.append(newSegment)
+            }
+        }
+        
+        //Creation of Events
+        let events = creationOfEvents(segments: segments)
+        print("number of points: \(events.count)")
+        print("Incubation finished")
     }
 }
 
