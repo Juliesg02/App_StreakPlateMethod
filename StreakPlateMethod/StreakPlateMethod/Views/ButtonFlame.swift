@@ -61,8 +61,12 @@ struct ButtonFlame: View {
             .onReceive(timer) { timer in
                 if isPressing {
                     countingTime += 1
-                    if countingTime > 6 {
+                    if countingTime >= 6 {
                         animationIndex = 6
+                        if !isFlamed {
+                            isFlamed = true
+                            isSample = false
+                        }
                     } else {
                         withAnimation {
                             animationIndex += 1

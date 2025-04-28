@@ -199,10 +199,107 @@ struct LabView: View {
                 segments.append(newSegment)
             }
         }
-        
         //Creation of Events
         let events = creationOfEvents(segments: segments)
-        print("number of points: \(events.count)")
+        //Init of Status Class
+        let status = Status(segments: segments, events: events)
+        //Init of IntersectedPoints
+        let intersectedPoints = IntersectedPoints(points: [])
+        
+        //Recognition of intersections
+        while !status.events.isEmpty {
+            let point = status.events.removeFirst()
+            handleEvent(point: point, status: status,intersectedPoints: intersectedPoints)
+        }
+        
+        print(intersectedPoints.points)
+        
+        var pathsInfoCut = creationOfPathsInfoCut(
+            intersectedPoints: intersectedPoints,
+            segments: segments,
+            pathsInfo: pathsInfo)
+        
+        //---------------------
+        
+        
+        var previousProbabilityOfGrowth: Double = 0.0
+        var probabilityOfGrowth = 0.0
+        
+        for pathIndex in 0..<pathsInfoCut.count {
+            
+            let pathInfoCut = pathsInfoCut[pathIndex]
+            previousProbabilityOfGrowth = probabilityOfGrowth
+            
+            if pathInfoCut.isSampled { //Is sampled
+                probabilityOfGrowth = 1.1
+                ///print("\(pathIndex) Sampled")
+            } else { // Is not sampled
+                if pathInfoCut.isFlamed { //Is flamed
+                    if !(pathInfoCut.pathCutIndex > 0) { // If its the first one path
+                        probabilityOfGrowth = 0.0
+                        ///print("\(pathIndex) Flamed, first one")
+                        
+                    } else { // if its not the first one
+                        if let nextTouchedStrokeIndex = pathsInfoCut[pathIndex - 1].nextTouchedStrokeIndex { // if are real tocuches
+                            let touchedProbability = pathsInfoCut.last { $0.strokeIndex == nextTouchedStrokeIndex}?.probabilityOfGrowth
+                            probabilityOfGrowth = {
+                                if previousProbabilityOfGrowth < (touchedProbability ?? 0.0) {
+                                    ///print("taked touched")
+                                    return getProbabiltyLog(current: (touchedProbability ?? 0.0))
+                                } else {
+                                    return previousProbabilityOfGrowth * 0.9
+                                }
+                            }()
+                            //probabilityOfGrowth = max(previousProbabilityOfGrowth,touchedProbability ?? 0.0)
+                            //print("\(pathIndex) Flamed, Not first one, real touches")
+                            
+                        } else { // if there is no real touches
+                            probabilityOfGrowth = previousProbabilityOfGrowth
+                            //print("\(pathIndex) Flamed, Not first one, no real touches")
+                            
+                        }
+                    }
+                } else { //Is not Flamed
+                    if !(pathInfoCut.pathCutIndex > 0) { // If its the first one path
+                        probabilityOfGrowth = previousProbabilityOfGrowth
+                        //print("\(pathIndex) no flamed, first one")
+                        
+                    } else { // IF its not the first one path
+                        if let nextTouchedStrokeIndex = pathsInfoCut[pathIndex - 1].nextTouchedStrokeIndex { // if are real tocuches
+                            let touchedProbability = pathsInfoCut.last { $0.strokeIndex == nextTouchedStrokeIndex}?.probabilityOfGrowth
+                            probabilityOfGrowth = {
+                                if previousProbabilityOfGrowth < (touchedProbability ?? 0.0) {
+                                    ///print("taked touched")
+                                    return getProbabiltyLog(current: (touchedProbability ?? 0.0))
+                                } else {
+                                    return previousProbabilityOfGrowth * 0.9
+                                }
+                            }()
+                            //probabilityOfGrowth = max(previousProbabilityOfGrowth,touchedProbability ?? 0.0)
+                            //print("\(pathIndex) no flamed, Not first one, real touches")
+                            
+                        } else { // if there is no real touches
+                            probabilityOfGrowth = previousProbabilityOfGrowth
+                            //print("\(pathIndex) no flamed, Not first one, no real touches")
+                            
+                        }
+                    }
+                }
+            }
+            pathsInfoCut[pathIndex].probabilityOfGrowth = probabilityOfGrowth
+            pathsInfoCut[pathIndex].nextTouchedStrokeIndex = {
+                pathsInfoCut[pathIndex].touchedStrokeIndex.filter {
+                    $0 < pathsInfoCut[pathIndex].strokeIndex
+                }.last
+            }()
+            //print (pathsInfoCut[pathIndex].nextTouchedStrokeIndex ?? "NONE")
+            let dotStrokes = addDots(from: pathInfoCut.path, interval: 10, probabilityOfGrowth: probabilityOfGrowth, color: microorganism.color)
+            canvasView.drawing.strokes.append(contentsOf: dotStrokes)
+        }
+        
+        func getProbabiltyLog(current: Double, k: Double = 0.5) -> Double {
+            return max(0, current - k * log(1 + current))
+        }
         print("Incubation finished")
     }
 }
@@ -212,6 +309,6 @@ struct LabView: View {
             microorganism: Microorganism(name: """
 Saccharomyces 
 cerevisiae
-""", type: "", color: .cyan, image: "yeast"),
+""", type: "", color: .red, image: "yeast"),
             cultureMedia: CultureMedia(name: "", type: "", color: .cyan, image: ""))
 }
