@@ -15,7 +15,7 @@ struct LabView: View {
     
     //Canvas
     @State private var canvasView = PKCanvasView()
-    @State private var drawing = PKDrawing()
+    @Binding var drawing: PKDrawing
     //    @State private var toolPicker = PKToolPicker()
     @State private var backgroundColor: UIColor = .white
     
@@ -30,7 +30,6 @@ struct LabView: View {
     
     //Alerts
     @State private var showingRestartAlert = false
-    @Environment(\.dismiss) var dismiss
     @State private var showingBackAlert = false
     @State private var showingIncubate = false
     @State private var showingNoStreak = false
@@ -137,7 +136,8 @@ struct LabView: View {
         .alert("Exit the Experiment?", isPresented: $showingBackAlert) {
             Button("Cancel", role: .cancel) {}
             Button("Exit", role: .destructive) {
-                dismiss()
+                path.removeLast()
+                drawing.strokes.removeAll()
             }
         } message: {
             Text("If you go back now, all your progress will be lost.")
@@ -294,13 +294,19 @@ struct LabView: View {
             }()
             //print (pathsInfoCut[pathIndex].nextTouchedStrokeIndex ?? "NONE")
             let dotStrokes = addDots(from: pathInfoCut.path, interval: 10, probabilityOfGrowth: probabilityOfGrowth, color: microorganism.color)
-            canvasView.drawing.strokes.append(contentsOf: dotStrokes)
+            withAnimation {
+                drawing.strokes.append(contentsOf: dotStrokes)
+            }
+            
+            
         }
         
         func getProbabiltyLog(current: Double, k: Double = 0.5) -> Double {
             return max(0, current - k * log(1 + current))
         }
         print("Incubation finished")
+        
+        path.append(.resultView(microorganism: microorganism, cultureMedia: cultureMedia))
     }
 }
 
@@ -310,5 +316,5 @@ struct LabView: View {
 Saccharomyces 
 cerevisiae
 """, type: "", color: .red, image: "yeast"),
-            cultureMedia: CultureMedia(name: "", type: "", color: .cyan, image: ""))
+            cultureMedia: CultureMedia(name: "", type: "", color: .cyan, image: ""), drawing: .constant(PKDrawing()))
 }

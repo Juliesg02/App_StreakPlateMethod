@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PencilKit
 
 enum Screen: Hashable {
     case welcomeView
@@ -14,11 +15,13 @@ enum Screen: Hashable {
     case stepsView
     case selectionView
     case labView(microorganism: Microorganism, cultureMedia: CultureMedia)
+    case resultView(microorganism: Microorganism, cultureMedia: CultureMedia)
     
 }
 
 struct ContentView: View {
     @State private var path: [Screen] = []
+    @State private var drawing: PKDrawing = PKDrawing()
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
@@ -43,7 +46,8 @@ struct ContentView: View {
                 case .stepsView: StepsView(path: $path)
                 case .selectionView: SelectionView(path: $path)
                 case .labView(let microorganism, let cultureMedia):
-                        LabView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia)
+                    LabView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing)
+                case .resultView(let microorganism, let cultureMedia): ResultView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing, canvasView: PKCanvasView())
                 }
             }
         }
