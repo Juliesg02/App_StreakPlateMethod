@@ -62,7 +62,9 @@ struct ButtonFlame: View {
                 if isPressing {
                     countingTime += 1
                     if countingTime >= 6 {
-                        animationIndex = 6
+                        withAnimation {
+                            animationIndex = 6
+                        }
                         if !isFlamed {
                             isFlamed = true
                             isSample = false
@@ -74,13 +76,14 @@ struct ButtonFlame: View {
                     }
                 }
             }
-            
+            /*
             Text("isFlamed:\(isFlamed)")
             Text("isSample:\(isSample)")
             Text("isPressing:\(isPressing)")
             Text("countingTime:\(countingTime)")
             Text("animationIndex:\(animationIndex)")
             Button("reset", action: { isSample = true; isFlamed = false})
+             */
         }
     }
     
