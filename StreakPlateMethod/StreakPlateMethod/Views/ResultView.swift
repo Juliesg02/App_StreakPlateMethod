@@ -51,6 +51,8 @@ struct ResultView: View {
                 }
                 Button(action: {
                     showingFinishAlert = true
+                    
+                    
                 }) {
                     Text("Finish")
                         .styledTextButton()
