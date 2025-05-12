@@ -96,43 +96,42 @@ struct LabView: View {
                 Button("Delete", action: {showingRestartAlert = true})
                 Spacer()
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        showingBackAlert = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                                .fontWeight(.semibold)
-                            Text("Back")
-                        }
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        //
-                    } label: {
-                        Text("Cheat Sheet")
-                            .foregroundStyle(Color.accentColor)
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showingRestartAlert = true
-                    } label: {
-                        Text("Restart")
-                            .foregroundStyle(.red)
-                    }
-                }
-            }
-            .navigationBarBackButtonHidden(true)
         }
         .onAppear {
             canvasView.tool = PKInkingTool(.pen, color: .customGray, width: 5)
             backgroundColor = cultureMedia.color
             //microorganismName = microorganism.name
         }
-        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    showingBackAlert = true
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .fontWeight(.semibold)
+                        Text("Back")
+                    }
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    //
+                } label: {
+                    Text("Cheat Sheet")
+                        .foregroundStyle(Color.accentColor)
+                }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showingRestartAlert = true
+                } label: {
+                    Text("Restart")
+                        .foregroundStyle(.red)
+                }
+            }
+        }
+        .navigationBarBackButtonHidden(true)
         .alert("Exit the Experiment?", isPresented: $showingBackAlert) {
             Button("Cancel", role: .cancel) {}
             Button("Exit", role: .destructive) {
