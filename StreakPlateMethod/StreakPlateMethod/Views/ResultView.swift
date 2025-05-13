@@ -109,9 +109,9 @@ struct ResultView: View {
                microorganism: Microorganism(name: """
 Saccharomyces 
 cerevisiae
-""", type: "", color: .red, image: "yeast"),
+""", type: "", color: .red, textColor: .yeastText, image: "yeast"),
                
-               cultureMedia: CultureMedia(name: "", type: "", color: .cyan, image: ""),
+               cultureMedia: CultureMedia(name: "", type: "", color: .cyan, textColor: .textNutrient, image: ""),
                
                drawing: .constant(PKDrawing()),
                canvasView: PKCanvasView())

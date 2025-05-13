@@ -45,13 +45,13 @@ struct SelectionView: View {
                                 Text(microorganism.name)
                                     .font(.title3)
                                     .bold()
-                                    .foregroundColor(microSelected == index ? Color(microorganism.color) :.secondary)
+                                    .foregroundColor(microSelected == index ? Color(microorganism.textColor) :.secondary)
                                     .multilineTextAlignment(.center)
                                     .padding(.top)
                                 
                                 Text(microorganism.type)
                                     .font(.caption)
-                                    .foregroundColor(microSelected == index ? Color(microorganism.color) :.secondary)
+                                    .foregroundColor(microSelected == index ? Color(microorganism.textColor) :.secondary)
                                     .italic()
                             }
                             .onTapGesture {
@@ -79,13 +79,13 @@ struct SelectionView: View {
                                 Text(media.name)
                                     .font(.title3)
                                     .bold()
-                                    .foregroundColor(cultureSelected == index ? Color(media.color) :.secondary)
+                                    .foregroundColor(cultureSelected == index ? Color(media.textColor) :.secondary)
                                     .multilineTextAlignment(.center)
                                     .padding(.top)
                                 
                                 Text(media.type)
                                     .font(.caption)
-                                    .foregroundColor(cultureSelected == index ? Color(media.color) :.secondary)
+                                    .foregroundColor(cultureSelected == index ? Color(media.textColor) :.secondary)
                                     .italic()
                             }
                             .onTapGesture {

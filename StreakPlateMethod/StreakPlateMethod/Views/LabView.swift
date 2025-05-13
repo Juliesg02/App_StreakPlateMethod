@@ -314,6 +314,6 @@ struct LabView: View {
             microorganism: Microorganism(name: """
 Saccharomyces 
 cerevisiae
-""", type: "", color: .red, image: "yeast"),
-            cultureMedia: CultureMedia(name: "", type: "", color: .cyan, image: ""), drawing: .constant(PKDrawing()))
+""", type: "", color: .red, textColor: .yeastText, image: "yeast"),
+            cultureMedia: CultureMedia(name: "", type: "", color: .cyan, textColor: .cultureBloodAgar, image: ""), drawing: .constant(PKDrawing()))
 }

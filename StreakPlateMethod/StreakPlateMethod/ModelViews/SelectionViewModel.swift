@@ -12,33 +12,33 @@ let microorganisms: [Microorganism] = [
                   Salmonella 
                   enterica
                   """,
-                  type: "Bacteria", color: .salmonellaColor, image: "salmonella"),
+                  type: "Bacteria", color: .salmonellaColor, textColor: .salmonellaText, image: "salmonella"),
     Microorganism(name: """
                     Saccharomyces
                     cerevisiae
                     """,
-                  type: "Yeast", color: .yeastColor, image: "yeast"),
+                  type: "Yeast", color: .yeastColor, textColor: .yeastText, image: "yeast"),
     Microorganism(name: """
                   Pseudomonas 
                   fluorescens
                   """,
-                  type: "Bacteria", color: .pseudomonasFluoColor, image: "pseudomonas"),
+                  type: "Bacteria", color: .pseudomonasFluoColor, textColor: .pseudomonasFluoText, image: "pseudomonas"),
     Microorganism(name: """
                     Klebsiella
                     pneumoniae
                     """,
-                  type: "Bacteria", color: .klebsiellaColor, image: "klebsiella")
+                  type: "Bacteria", color: .klebsiellaColor, textColor: .klebsiellaText, image: "klebsiella")
     
 ]
 
 let cultureMedias: [CultureMedia] = [
     CultureMedia(name: "Nutrient Agar",
-                 type: "General", color: .cultureNutrient, image: "nutrientAgar"),
+                 type: "General", color: .cultureNutrient, textColor: .textNutrient, image: "nutrientAgar"),
     CultureMedia(name: "MacConkey Agar",
-                 type: "Selective", color: .cultureMacConkey, image: "macconkey"),
+                 type: "Selective", color: .cultureMacConkey, textColor: .textMacConkey, image: "macconkey"),
     CultureMedia(name: "Blood Agar",
-                 type: "Enriched", color: .cultureBloodAgar, image: "bloodAgar"),
+                 type: "Enriched", color: .cultureBloodAgar, textColor: .textBloodAgar, image: "bloodAgar"),
     CultureMedia(name: "Cetrimide Agar",
-                 type: "Selective", color: .cultureCetrimide, image: "cetrimideAgar")
+                 type: "Selective", color: .cultureCetrimide, textColor: .textCetrimide, image: "cetrimideAgar")
     
 ]
