@@ -8,7 +8,6 @@ A Swift-based iOS app that teaches biotechnology and related students the **four
 <img src="https://github.com/user-attachments/assets/e99c7555-fef8-4462-87a3-bdb875e9494e" width=500/>
 <img src="https://github.com/user-attachments/assets/ca0d1aef-b069-482f-af4e-747406544174" width=500/>
 <img src="https://github.com/user-attachments/assets/a67ffc44-dd64-4f51-819c-dee78d8d3e6c" width=500/>
-<img src="https://github.com/user-attachments/assets/057f03c5-dcde-454f-b114-5b769bd3c4ef" width=500/>
 <img src="https://github.com/user-attachments/assets/a4167336-f66c-4a69-9b06-2c9e30dac4f9" width=500/>
 
 ## Features
