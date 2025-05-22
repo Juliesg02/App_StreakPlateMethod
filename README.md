@@ -1,12 +1,15 @@
 # StreakLab!
 A Swift-based iOS app that teaches biotechnology and related students the **four-quadrant streak method** used in microbiology. Designed for those with limited lab experience, it simulates a realistic lab environment and helps students understand microorganism isolation before entering the lab.
 
-<img src="https://github.com/user-attachments/assets/your-screenshot-1" width=200 height=200/>
+<img src="https://github.com/user-attachments/assets/efd74718-482c-44e6-bb9c-21eceb354e85" width=200 height=200/>
 
 ## App Preview
 
-<img src="https://github.com/user-attachments/assets/your-screenshot-2" width=200/>
-<img src="https://github.com/user-attachments/assets/your-screenshot-3" width=200/>
+<img src="https://github.com/user-attachments/assets/e99c7555-fef8-4462-87a3-bdb875e9494e" width=500/>
+<img src="https://github.com/user-attachments/assets/ca0d1aef-b069-482f-af4e-747406544174" width=500/>
+<img src="https://github.com/user-attachments/assets/a67ffc44-dd64-4f51-819c-dee78d8d3e6c" width=500/>
+<img src="https://github.com/user-attachments/assets/057f03c5-dcde-454f-b114-5b769bd3c4ef" width=500/>
+<img src="https://github.com/user-attachments/assets/a4167336-f66c-4a69-9b06-2c9e30dac4f9" width=500/>
 
 ## Features
 - Learn the streak method with onboarding and visual guidance.
@@ -23,7 +26,7 @@ A Swift-based iOS app that teaches biotechnology and related students the **four
 
 ## 🚀 TestFlight Access
 Want to try the app? You can join the beta testing program via TestFlight:
-👉 [**Join the TestFlight Beta**](https://testflight.apple.com/join/YOUR-APP-LINK)  
+👉 [**Join the TestFlight Beta**](https://testflight.apple.com/join/RgBHQpuM)  
 
 ## License
 This project is licensed under the MIT License.
