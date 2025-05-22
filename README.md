@@ -20,7 +20,7 @@ A Swift-based iOS app that teaches biotechnology and related students the **four
 
 ## Installation
 1. Clone this repository:  
-   `git clone https://github.com/Juliesg02/StreakLab.git`
+   `git clone https://github.com/Juliesg02/App_StreakPlateMethod.git`
 2. Open the project in Xcode.
 3. Run the app on a simulator or a connected iOS device.
 
