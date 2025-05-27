@@ -73,7 +73,7 @@ struct LabView: View {
                         .animation(.default, value: isSampled)
                     }
                     CanvasView(canvasView: $canvasView, drawing: $drawing, pathsInfo: $pathsInfo, isSampled: $isSampled, isFlamed: $isFlamed, backgroundColor: $backgroundColor)
-                        .frame(width: geometry.size.height * 0.6, height: geometry.size.height * 0.6)
+                        .frame(width: canvasWidth, height: canvasHeight)
                         .clipShape(Circle())
                         .shadow(radius: 5)
                         .padding()

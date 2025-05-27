@@ -97,6 +97,8 @@ struct SelectionView: View {
                     .padding()
                     
                     Button {
+                        screenWidth = geometry.size.width
+                        screenHeight = geometry.size.height
                         path.append(.labView(microorganism: microorganism, cultureMedia: cultureMedia))
                     } label: {
                         Text("Let's streak!")

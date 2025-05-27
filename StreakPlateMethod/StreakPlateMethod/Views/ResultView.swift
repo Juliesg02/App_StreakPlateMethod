@@ -18,7 +18,6 @@ struct ResultView: View {
     @State private var showingBackAlert = false
     @State private var showingFinishAlert = false
     @State private var cultureName: String = ""
-    @State private var viewHeight: CGFloat = 0
     
     
     
@@ -31,7 +30,7 @@ struct ResultView: View {
                     .font(.title2.bold())
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
-                    .frame(width: viewHeight * 0.5)
+                    .frame(width: geometry.size.height * 0.5)
                     .padding(.vertical, 6)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
@@ -43,7 +42,7 @@ struct ResultView: View {
                 HStack {
                     Spacer()
                     CanvasViewResult(canvasView: $canvasView, drawing: $drawing, backgroundColor: $backgroundColor)
-                        .frame(width: viewHeight * 0.6, height: viewHeight * 0.6)
+                        .frame(width: canvasWidth, height: canvasHeight)
                         .clipShape(Circle())
                         .shadow(radius: 5)
                         .padding()
@@ -64,7 +63,6 @@ struct ResultView: View {
                 backgroundColor = cultureMedia.color
                 cultureName = microorganism.name
                 //microorganismName = microorganism.name
-                viewHeight = geometry.size.height
             }
             .ignoresSafeArea(.keyboard)
         }
