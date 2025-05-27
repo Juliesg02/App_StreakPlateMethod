@@ -8,15 +8,20 @@
 
 import SwiftUI
 import RealityKit
+import PencilKit
 
 struct ARSceneView : View {
+    @Binding var path: [Screen]
+    var microorganism: Microorganism
+    var cultureMedia: CultureMedia
+    @Binding var dotStrokes: [PKStroke]
     var body: some View {
         RealityView { content in
 
             // Create a cube model
             let model = Entity()
-            let mesh = MeshResource.generateCylinder(height: 0.02, radius: 0.05)
-            let material = SimpleMaterial(color: .gray, roughness: 0.15, isMetallic: false)
+            let mesh = MeshResource.generateCylinder(height: 0.02, radius: 0.055)
+            let material = SimpleMaterial(color: cultureMedia.color, roughness: 0.15, isMetallic: false)
             model.components.set(ModelComponent(mesh: mesh, materials: [material]))
             model.position = [0, 0, 0]
             
@@ -25,22 +30,38 @@ struct ARSceneView : View {
             anchor.addChild(model)
 
             
-            // Generate multiple spheres (UFCs)
-            let ufcPositions: [SIMD3<Float>] = (0..<20).map { _ in
-                let x = Float.random(in: -0.04...0.04)
-                let z = Float.random(in: -0.04...0.04)
-                return SIMD3<Float>(x, 0.007, z) // y is fixed above the dish
+            // Generate spheres for dotStrokes (UFCs)
+            let radiusMeters: Float = 0.003  // Radius of the small spheres
+            let canvasSize = canvasWidth     // canvasWidth and canvasHeight are equal
+            let arDishRadius: Float = 0.05   // In meters, for a 10cm dish
+            let center = CGPoint(x: canvasSize / 2, y: canvasSize / 2)
+
+            for stroke in dotStrokes {
+                guard let point = stroke.path.first?.location else { continue }
+
+                // Get offset from center
+                let offsetX = point.x - center.x
+                let offsetY = point.y - center.y
+
+                // Convert to relative radius
+                let distanceFromCenter = sqrt(offsetX * offsetX + offsetY * offsetY)
+
+                // Skip if outside circular dish
+                if distanceFromCenter > canvasSize / 2 { continue }
+
+                // Normalize to [-1...1] range, then scale to dish radius in meters
+                let normalizedX = Float(offsetX / (canvasSize / 2)) * arDishRadius
+                let normalizedZ = Float(offsetY / (canvasSize / 2)) * arDishRadius * -1  // Flip vertically if needed
+
+                // Create the sphere entity
+                let colony = Entity()
+                let colonyMesh = MeshResource.generateSphere(radius: radiusMeters)
+                let colonyMaterial = SimpleMaterial(color: microorganism.color, roughness: 0.12, isMetallic: false)
+                colony.components.set(ModelComponent(mesh: colonyMesh, materials: [colonyMaterial]))
+                colony.position = SIMD3<Float>(normalizedX, 0.008, normalizedZ)
+                anchor.addChild(colony)
             }
-            
-            
-            for position in ufcPositions {
-                  let colony = Entity()
-                  let colonyMesh = MeshResource.generateSphere(radius: 0.005)
-                  let colonyMaterial = SimpleMaterial(color: .red, roughness: 0.12, isMetallic: false)
-                  colony.components.set(ModelComponent(mesh: colonyMesh, materials: [colonyMaterial]))
-                  colony.position = position
-                  anchor.addChild(colony)
-            }
+            dotStrokes.removeAll()
             
 
             // Add the horizontal plane anchor to the scene
@@ -54,5 +75,8 @@ struct ARSceneView : View {
 }
 
 #Preview {
-    ARSceneView()
+    ARSceneView(path: .constant([]), microorganism: Microorganism(name: """
+Saccharomyces 
+cerevisiae
+""", type: "", color: .red, textColor: .yeastText, image: "yeast"), cultureMedia: CultureMedia(name: "", type: "", color: .cyan, textColor: .textNutrient, image: ""), dotStrokes: .constant([]))
 }

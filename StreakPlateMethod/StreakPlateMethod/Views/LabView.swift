@@ -37,6 +37,8 @@ struct LabView: View {
     //Analisis
     @State private var segments: [Segment] = []
 
+    //ARData
+    @Binding var dotStrokes: [PKStroke]
     
     var body: some View {
         GeometryReader { geometry in
@@ -292,12 +294,11 @@ struct LabView: View {
                 }.last
             }()
             //print (pathsInfoCut[pathIndex].nextTouchedStrokeIndex ?? "NONE")
-            let dotStrokes = addDots(from: pathInfoCut.path, interval: 10, probabilityOfGrowth: probabilityOfGrowth, color: microorganism.color)
+             let dotStrokesMomentary = addDots(from: pathInfoCut.path, interval: 10, probabilityOfGrowth: probabilityOfGrowth, color: microorganism.color)
+            dotStrokes.append(contentsOf: dotStrokesMomentary)
             withAnimation {
-                drawing.strokes.append(contentsOf: dotStrokes)
+                drawing.strokes.append(contentsOf: dotStrokesMomentary)
             }
-            
-            
         }
         
         func getProbabiltyLog(current: Double, k: Double = 0.5) -> Double {
@@ -306,6 +307,7 @@ struct LabView: View {
         print("Incubation finished")
         
         path.append(.resultView(microorganism: microorganism, cultureMedia: cultureMedia))
+        
     }
 }
 
@@ -315,5 +317,5 @@ struct LabView: View {
 Saccharomyces 
 cerevisiae
 """, type: "", color: .red, textColor: .yeastText, image: "yeast"),
-            cultureMedia: CultureMedia(name: "", type: "", color: .cyan, textColor: .cultureBloodAgar, image: ""), drawing: .constant(PKDrawing()))
+            cultureMedia: CultureMedia(name: "", type: "", color: .cyan, textColor: .cultureBloodAgar, image: ""), drawing: .constant(PKDrawing()), dotStrokes: .constant([]))
 }

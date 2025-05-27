@@ -16,12 +16,13 @@ enum Screen: Hashable {
     case selectionView
     case labView(microorganism: Microorganism, cultureMedia: CultureMedia)
     case resultView(microorganism: Microorganism, cultureMedia: CultureMedia)
-    case ARSceneView
+    case ARSceneView(microorganism: Microorganism, cultureMedia: CultureMedia)
 }
 
 struct ContentView: View {
     @State private var path: [Screen] = []
     @State private var drawing: PKDrawing = PKDrawing()
+    @State private var dotStrokes: [PKStroke] = []
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
@@ -37,7 +38,7 @@ struct ContentView: View {
                     Text("Go to Welcome View")
                 }
                 Button("Go to AR") {
-                    path.append(.ARSceneView)
+                    //path.append(.ARSceneView)
                 }
             }
             .navigationDestination(for: Screen.self) { screen in
@@ -48,9 +49,9 @@ struct ContentView: View {
                 case .stepsView: StepsView(path: $path)
                 case .selectionView: SelectionView(path: $path)
                 case .labView(let microorganism, let cultureMedia):
-                    LabView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing)
+                    LabView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing, dotStrokes: $dotStrokes)
                 case .resultView(let microorganism, let cultureMedia): ResultView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing, canvasView: PKCanvasView())
-                case .ARSceneView: ARSceneView()
+                case .ARSceneView(let microorganism, let cultureMedia): ARSceneView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, dotStrokes: $dotStrokes)
                     
                 }
             }

@@ -48,10 +48,16 @@ struct ResultView: View {
                         .padding()
                     Spacer()
                 }
+                Button {
+                    path.append(.ARSceneView(microorganism: microorganism, cultureMedia: cultureMedia))
+                } label: {
+                    Text("Aumented Reality")
+                        .styledTextButton()
+                }
+
+                
                 Button(action: {
                     showingFinishAlert = true
-                    
-                    
                 }) {
                     Text("Finish")
                         .styledTextButton()
