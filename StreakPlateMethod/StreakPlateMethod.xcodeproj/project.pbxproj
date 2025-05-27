@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		00C5AA052DAAC69E00178610 /* StreakPlateMethod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreakPlateMethod.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00498BD72DE60F0F00F5EBB4 /* StreakPlateMethod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreakPlateMethod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -33,16 +33,8 @@
 			isa = PBXGroup;
 			children = (
 				00C5AA072DAAC69E00178610 /* StreakPlateMethod */,
-				00C5AA062DAAC69E00178610 /* Products */,
+				00498BD72DE60F0F00F5EBB4 /* StreakPlateMethod.app */,
 			);
-			sourceTree = "<group>";
-		};
-		00C5AA062DAAC69E00178610 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				00C5AA052DAAC69E00178610 /* StreakPlateMethod.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -67,7 +59,7 @@
 			packageProductDependencies = (
 			);
 			productName = StreakPlateMethod;
-			productReference = 00C5AA052DAAC69E00178610 /* StreakPlateMethod.app */;
+			productReference = 00498BD72DE60F0F00F5EBB4 /* StreakPlateMethod.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -95,7 +87,7 @@
 			mainGroup = 00C5A9FC2DAAC69E00178610;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 00C5AA062DAAC69E00178610 /* Products */;
+			productRefGroup = 00C5A9FC2DAAC69E00178610;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -256,6 +248,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"StreakPlateMethod/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,6 +281,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"StreakPlateMethod/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

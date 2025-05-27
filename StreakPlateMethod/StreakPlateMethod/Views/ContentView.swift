@@ -16,7 +16,7 @@ enum Screen: Hashable {
     case selectionView
     case labView(microorganism: Microorganism, cultureMedia: CultureMedia)
     case resultView(microorganism: Microorganism, cultureMedia: CultureMedia)
-    
+    case ARSceneView
 }
 
 struct ContentView: View {
@@ -31,11 +31,13 @@ struct ContentView: View {
                     Text("Start")
                         .styledTextButton()
                 }
-                
                 Button {
                     path.append(.welcomeView)
                 } label: {
                     Text("Go to Welcome View")
+                }
+                Button("Go to AR") {
+                    path.append(.ARSceneView)
                 }
             }
             .navigationDestination(for: Screen.self) { screen in
@@ -48,6 +50,8 @@ struct ContentView: View {
                 case .labView(let microorganism, let cultureMedia):
                     LabView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing)
                 case .resultView(let microorganism, let cultureMedia): ResultView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing, canvasView: PKCanvasView())
+                case .ARSceneView: ARSceneView()
+                    
                 }
             }
         }
