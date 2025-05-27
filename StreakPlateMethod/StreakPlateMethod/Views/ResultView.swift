@@ -18,6 +18,8 @@ struct ResultView: View {
     @State private var showingBackAlert = false
     @State private var showingFinishAlert = false
     @State private var cultureName: String = ""
+    @Binding var dotStrokes: [PKStroke]
+
     
     
     
@@ -98,6 +100,7 @@ struct ResultView: View {
         .alert("Finish the Experiment?", isPresented: $showingFinishAlert) {
             Button("Cancel", role: .destructive) {}
             Button("Finish", role: .cancel) {
+                dotStrokes.removeAll()
                 path.removeAll()
                 drawing.strokes.removeAll()
             }
@@ -118,5 +121,5 @@ cerevisiae
                cultureMedia: CultureMedia(name: "", type: "", color: .cyan, textColor: .textNutrient, image: ""),
                
                drawing: .constant(PKDrawing()),
-               canvasView: PKCanvasView())
+               canvasView: PKCanvasView(), dotStrokes: .constant([]))
 }

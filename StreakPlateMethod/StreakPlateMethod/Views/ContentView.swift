@@ -37,9 +37,6 @@ struct ContentView: View {
                 } label: {
                     Text("Go to Welcome View")
                 }
-                Button("Go to AR") {
-                    //path.append(.ARSceneView)
-                }
             }
             .navigationDestination(for: Screen.self) { screen in
                 switch screen {
@@ -50,8 +47,8 @@ struct ContentView: View {
                 case .selectionView: SelectionView(path: $path)
                 case .labView(let microorganism, let cultureMedia):
                     LabView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing, dotStrokes: $dotStrokes)
-                case .resultView(let microorganism, let cultureMedia): ResultView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing, canvasView: PKCanvasView())
-                case .ARSceneView(let microorganism, let cultureMedia): ARSceneView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, dotStrokes: $dotStrokes)
+                case .resultView(let microorganism, let cultureMedia): ResultView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing, canvasView: PKCanvasView(), dotStrokes: $dotStrokes)
+                case .ARSceneView(let microorganism, let cultureMedia): ARSceneView( microorganism: microorganism, cultureMedia: cultureMedia, dotStrokes: $dotStrokes)
                     
                 }
             }

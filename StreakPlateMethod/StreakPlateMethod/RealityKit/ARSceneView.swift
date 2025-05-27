@@ -11,7 +11,6 @@ import RealityKit
 import PencilKit
 
 struct ARSceneView : View {
-    @Binding var path: [Screen]
     var microorganism: Microorganism
     var cultureMedia: CultureMedia
     @Binding var dotStrokes: [PKStroke]
@@ -60,9 +59,7 @@ struct ARSceneView : View {
                 colony.components.set(ModelComponent(mesh: colonyMesh, materials: [colonyMaterial]))
                 colony.position = SIMD3<Float>(normalizedX, 0.008, normalizedZ)
                 anchor.addChild(colony)
-            }
-            dotStrokes.removeAll()
-            
+            }            
 
             // Add the horizontal plane anchor to the scene
             content.add(anchor)
@@ -75,7 +72,7 @@ struct ARSceneView : View {
 }
 
 #Preview {
-    ARSceneView(path: .constant([]), microorganism: Microorganism(name: """
+    ARSceneView(microorganism: Microorganism(name: """
 Saccharomyces 
 cerevisiae
 """, type: "", color: .red, textColor: .yeastText, image: "yeast"), cultureMedia: CultureMedia(name: "", type: "", color: .cyan, textColor: .textNutrient, image: ""), dotStrokes: .constant([]))
