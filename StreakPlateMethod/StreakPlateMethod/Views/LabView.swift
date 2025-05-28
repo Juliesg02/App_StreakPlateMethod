@@ -225,6 +225,7 @@ struct LabView: View {
         
         var previousProbabilityOfGrowth: Double = 0.0
         var probabilityOfGrowth = 0.0
+        dotStrokes.removeAll()
         
         for pathIndex in 0..<pathsInfoCut.count {
             

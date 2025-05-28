@@ -69,12 +69,14 @@ struct InstructionsView: View {
 
 
 struct StepsView: View {
-    init(path: Binding<[Screen]>) {
+    init(onBoarding: Binding<Bool>, path: Binding<[Screen]>) {
+        _onBoarding = onBoarding
         _path = path
         
         UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Color.accentColor)
         UIPageControl.appearance().pageIndicatorTintColor = UIColor(Color.secondary)
     }
+    @Binding var onBoarding: Bool
     @Binding var path: [Screen]
     var body: some View {
         GeometryReader { geometry in
@@ -99,7 +101,10 @@ struct StepsView: View {
                         .padding(.vertical)
                     
                     Button {
-                        path = []
+                        onBoarding = true
+                        UserDefaults.standard.set(onBoarding, forKey: "OnBoarding")
+                        path.removeAll()
+                        path.append(.selectionView)
                     } label: {
                         Text("Let's go!")
                             .styledTextButton()
@@ -118,5 +123,5 @@ struct StepsView: View {
 
 
 #Preview {
-    StepsView(path: .constant([]))
+    StepsView(onBoarding: .constant(false), path: .constant([]))
 }

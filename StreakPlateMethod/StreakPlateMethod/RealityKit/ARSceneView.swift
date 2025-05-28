@@ -20,7 +20,7 @@ struct ARSceneView : View {
             // Create a cube model
             let model = Entity()
             let mesh = MeshResource.generateCylinder(height: 0.02, radius: 0.055)
-            let material = SimpleMaterial(color: cultureMedia.color, roughness: 0.15, isMetallic: false)
+            let material = SimpleMaterial(color: cultureMedia.color.withAlphaComponent(0.98), roughness: 0.15, isMetallic: false)
             model.components.set(ModelComponent(mesh: mesh, materials: [material]))
             model.position = [0, 0, 0]
             

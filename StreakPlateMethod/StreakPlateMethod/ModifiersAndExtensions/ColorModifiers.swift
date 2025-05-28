@@ -13,7 +13,7 @@ extension UIColor {
     static let cultureNutrient = UIColor(red: 1.0, green: 0.9, blue: 0.6, alpha: 1.0)
     static let cultureMacConkey = UIColor(red: 0.9, green: 0.4, blue: 0.5, alpha: 1.0)
     static let cultureBloodAgar = UIColor(red: 0.7, green: 0.0, blue: 0.0, alpha: 1.0)
-    static let cultureCetrimide = UIColor(red: 0.6, green: 0.8, blue: 0.4, alpha: 01.0)
+    static let cultureCetrimide = UIColor(red: 0.6, green: 0.8, blue: 0.4, alpha: 1.0)
     
     static let textNutrient = UIColor(red: 0.85, green: 0.7, blue: 0.25, alpha: 1.0)
     static let textMacConkey = UIColor(red: 0.9, green: 0.4, blue: 0.5, alpha: 1.0)
