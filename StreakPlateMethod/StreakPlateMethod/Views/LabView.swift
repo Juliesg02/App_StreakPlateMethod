@@ -37,6 +37,9 @@ struct LabView: View {
     //Analisis
     @State private var segments: [Segment] = []
 
+    //CheatSheet
+    @State private var isShowingSheet: Bool = false
+    
     //ARData
     @Binding var dotStrokes: [PKStroke]
     
@@ -95,7 +98,6 @@ struct LabView: View {
                     Text("Incubate")
                         .styledTextButton()
                 }
-                Button("Delete", action: {showingRestartAlert = true})
                 Spacer()
             }
         }
@@ -103,6 +105,9 @@ struct LabView: View {
             canvasView.tool = PKInkingTool(.pen, color: .customGray, width: 5)
             backgroundColor = cultureMedia.color
             //microorganismName = microorganism.name
+        }
+        .sheet(isPresented: $isShowingSheet){
+            CheatSheetView()
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -118,7 +123,7 @@ struct LabView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    //
+                    isShowingSheet.toggle()
                 } label: {
                     Text("Cheat Sheet")
                         .foregroundStyle(Color.accentColor)
