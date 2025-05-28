@@ -16,6 +16,7 @@ A Swift-based iOS app that teaches biotechnology and related students the **four
 - Simulate streaking on a virtual Petri dish using PencilKit.
 - Interactive results based on your drawing input.
 - Built-in algorithm (Sweep Line) to detect streak intersections.
+- 3D colony view with RealityKit integration.
 
 ## Installation
 1. Clone this repository:  
