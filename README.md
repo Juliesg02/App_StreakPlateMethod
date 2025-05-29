@@ -9,6 +9,8 @@ A Swift-based iOS app that teaches biotechnology and related students the **four
 <img src="https://github.com/user-attachments/assets/ca0d1aef-b069-482f-af4e-747406544174" width=500/>
 <img src="https://github.com/user-attachments/assets/a67ffc44-dd64-4f51-819c-dee78d8d3e6c" width=500/>
 <img src="https://github.com/user-attachments/assets/a4167336-f66c-4a69-9b06-2c9e30dac4f9" width=500/>
+<img src="https://github.com/user-attachments/assets/df8b7b5c-3a03-4f22-925e-e4d6d575504d" width=500/>
+<img src="https://github.com/user-attachments/assets/c1127963-7ba3-4c32-8cf7-ed09b69b982a" width=500/>
 
 ## Features
 - Learn the streak method with onboarding and visual guidance.
