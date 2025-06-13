@@ -53,7 +53,7 @@ struct ResultView: View {
                 Button {
                     path.append(.ARSceneView(microorganism: microorganism, cultureMedia: cultureMedia))
                 } label: {
-                    Text("Aumented Reality")
+                    Text("Augmented Reality")
                         .styledTextButton()
                 }
 
