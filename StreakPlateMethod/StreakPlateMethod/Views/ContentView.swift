@@ -30,6 +30,7 @@ struct ContentView: View {
         
         NavigationStack(path: $path) {
             ZStack {
+                /*
                 GeometryReader { geometry in
                     ZStack {
                         ForEach(motionManager.balls.indices, id: \.self ) { i in
@@ -57,6 +58,7 @@ struct ContentView: View {
                         motionManager.loadBalls(from: petriStorage.records)
                     }
                 }
+                 */
                 VStack {
                     Spacer()
                     Spacer()
