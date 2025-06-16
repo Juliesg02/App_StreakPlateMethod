@@ -69,7 +69,7 @@ func imageName(for microorganism: String) -> String {
 }
 
 // record of the data of the ball
-struct PetriRecord: Identifiable, Codable {
+struct PetriRecord: Identifiable, Codable, Equatable {
     var id = UUID()
     let microorganismImage: String
     let medium: CultureMediumType

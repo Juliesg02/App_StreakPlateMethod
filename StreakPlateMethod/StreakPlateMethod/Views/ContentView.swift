@@ -26,12 +26,15 @@ struct ContentView: View {
     @State private var dotStrokes: [PKStroke] = []
     @StateObject private var petriStorage = PetriStorage()
     @StateObject private var motionManager = MotionManager()
+    @State private var initialized = false
+    @State private var lastSize: CGSize = .zero
     var body: some View {
         
         NavigationStack(path: $path) {
             ZStack {
-                /*
+                
                 GeometryReader { geometry in
+                    let size = geometry.size
                     ZStack {
                         ForEach(motionManager.balls.indices, id: \.self ) { i in
                             ZStack {
@@ -53,12 +56,22 @@ struct ContentView: View {
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .onAppear {
-                        motionManager.configure(screenSize: geometry.size, objectSize: CGSize(width: 80, height: 80))
-                        motionManager.loadBalls(from: petriStorage.records)
+                    .onChange(of: size) {
+                        if size != .zero && size != lastSize {
+                            lastSize = size
+                            motionManager.configure(screenSize: size, objectSize: CGSize(width: 80, height: 80))
+                            motionManager.loadBalls(from: petriStorage.records)
+                            initialized = true
+                        }
                     }
+
+                    .onChange(of: petriStorage.records) {
+                        if initialized {
+                            motionManager.loadBalls(from: petriStorage.records)
+                        }
+                    }
+                    
                 }
-                 */
                 VStack {
                     Spacer()
                     Spacer()
