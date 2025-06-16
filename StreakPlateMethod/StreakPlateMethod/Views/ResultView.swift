@@ -19,6 +19,7 @@ struct ResultView: View {
     @State private var showingFinishAlert = false
     @State private var cultureName: String = ""
     @Binding var dotStrokes: [PKStroke]
+    @ObservedObject var storage: PetriStorage
 
     
     
@@ -100,6 +101,7 @@ struct ResultView: View {
         .alert("Finish the Experiment?", isPresented: $showingFinishAlert) {
             Button("Cancel", role: .destructive) {}
             Button("Finish", role: .cancel) {
+                storage.addRecord(microorganism: microorganism, cultureMedia: cultureMedia)
                 dotStrokes.removeAll()
                 path.removeAll()
                 drawing.strokes.removeAll()
@@ -121,5 +123,5 @@ cerevisiae
                cultureMedia: CultureMedia(name: "", type: "", color: .cyan, textColor: .textNutrient, image: ""),
                
                drawing: .constant(PKDrawing()),
-               canvasView: PKCanvasView(), dotStrokes: .constant([]))
+               canvasView: PKCanvasView(), dotStrokes: .constant([]), storage: PetriStorage())
 }

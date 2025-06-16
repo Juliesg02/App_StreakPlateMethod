@@ -24,28 +24,60 @@ struct ContentView: View {
     @State private var path: [Screen] = []
     @State private var drawing: PKDrawing = PKDrawing()
     @State private var dotStrokes: [PKStroke] = []
+    @StateObject private var petriStorage = PetriStorage()
+    @StateObject private var motionManager = MotionManager()
     var body: some View {
+        
         NavigationStack(path: $path) {
-            VStack {
-                Spacer()
-                Spacer()
-                Text("StreakLab!")
-                    .font(.largeTitle)
-                    .bold()
-                Spacer()
-                Button {
-                    path.append(.selectionView)
-                } label: {
-                    Text("Start")
-                        .styledTextButton()
+            ZStack {
+                GeometryReader { geometry in
+                    ZStack {
+                        ForEach(motionManager.balls.indices, id: \.self ) { i in
+                            ZStack {
+                                Circle()
+                                    .fill(motionManager.balls[i].color)
+                                    .frame(width: 80, height: 80)
+                                    .rotationEffect(motionManager.balls[i].rotationAngle)
+                                    .offset(x: motionManager.balls[i].position.x,
+                                            y: motionManager.balls[i].position.y)
+                                Image(motionManager.balls[i].imageName)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 60, height: 60)
+                                    .rotationEffect(motionManager.balls[i].rotationAngle)
+                                    .offset(x: motionManager.balls[i].position.x,
+                                            y: motionManager.balls[i].position.y)
+                            }
+                            
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .onAppear {
+                        motionManager.configure(screenSize: geometry.size, objectSize: CGSize(width: 80, height: 80))
+                        motionManager.loadBalls(from: petriStorage.records)
+                    }
                 }
-                .padding()
-                Button {
-                    path.append(.welcomeView)
-                } label: {
-                    Text("Instructions")
+                VStack {
+                    Spacer()
+                    Spacer()
+                    Text("StreakLab!")
+                        .font(.largeTitle)
+                        .bold()
+                    Spacer()
+                    Button {
+                        path.append(.selectionView)
+                    } label: {
+                        Text("Start")
+                            .styledTextButton()
+                    }
+                    .padding()
+                    Button {
+                        path.append(.welcomeView)
+                    } label: {
+                        Text("Instructions")
+                    }
+                    Spacer()
                 }
-                Spacer()
             }
             .onAppear {
                 if !OnBoarding {
@@ -61,11 +93,12 @@ struct ContentView: View {
                 case .selectionView: SelectionView(path: $path)
                 case .labView(let microorganism, let cultureMedia):
                     LabView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing, dotStrokes: $dotStrokes)
-                case .resultView(let microorganism, let cultureMedia): ResultView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing, canvasView: PKCanvasView(), dotStrokes: $dotStrokes)
+                case .resultView(let microorganism, let cultureMedia): ResultView(path: $path, microorganism: microorganism, cultureMedia: cultureMedia, drawing: $drawing, canvasView: PKCanvasView(), dotStrokes: $dotStrokes, storage: petriStorage)
                 case .ARSceneView(let microorganism, let cultureMedia): ARSceneView( microorganism: microorganism, cultureMedia: cultureMedia, dotStrokes: $dotStrokes)
                     
                 }
             }
+            
         }
     }
 }
