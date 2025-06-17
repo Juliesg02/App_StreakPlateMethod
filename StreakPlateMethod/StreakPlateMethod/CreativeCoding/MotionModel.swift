@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreMotion
+import UIKit
 
 
 //Ball struct
@@ -26,6 +27,13 @@ struct BallState {
         self.color = record.medium.swiftUIColor
         self.imageName = record.microorganismImage
     }
+}
+
+func currentInterfaceOrientation() -> UIInterfaceOrientation? {
+    return UIApplication.shared.connectedScenes
+        .compactMap { $0 as? UIWindowScene }
+        .first(where: { $0.activationState == .foregroundActive })?
+        .interfaceOrientation
 }
 
 class MotionManager: ObservableObject {
@@ -58,8 +66,30 @@ class MotionManager: ObservableObject {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true) { _ in
             guard let motion = self.motionManager.deviceMotion else { return }
 
-            let ax = CGFloat(motion.gravity.x) * 80
-            let ay = CGFloat(-motion.gravity.y) * 80
+            let gravity = motion.gravity
+            var ax = CGFloat(gravity.x)
+            var ay = CGFloat(gravity.y)
+
+            if let orientation = currentInterfaceOrientation() {
+                switch orientation {
+                case .landscapeRight:
+                    // Swap and adjust sign for landscape right
+                    (ax, ay) = (-ay, -ax)
+                case .landscapeLeft:
+                    // Swap and adjust sign for landscape left
+                    (ax, ay) = (ay, ax)
+                case .portraitUpsideDown:
+                    ax = -ax
+                    ay = -ay
+                case .portrait:
+                    break
+                default:
+                    break
+                }
+            }
+
+            ax *= 80
+            ay *= 80
 
             for i in self.balls.indices {
                 self.balls[i].velocity.x += ax * 0.1
